@@ -1,0 +1,6 @@
+version: "Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)"
+options: "9c4d24c0a700964bcc02b5f0b01df5083b7d3cca700c3fc6a7373d8cfb779749"
+build_start_time: [1757376588, 766229000]
+build_end_time: [1757376589, 186956000]
+inputs:
+  "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/Sources/main.swift": [1757376587, 985140155]

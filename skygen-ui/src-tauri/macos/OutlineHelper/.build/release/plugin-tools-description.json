@@ -1,0 +1,232 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.OutlineHelper-arm64-apple-macosx15.0-release.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/sources",
+      "importPath" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/Sources/main.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "OutlineHelper",
+      "moduleOutputPath" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/Modules/OutlineHelper.swiftmodule",
+      "objects" : [
+        "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/main.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-O",
+        "-j12",
+        "-DSWIFT_PACKAGE",
+        "-module-cache-path",
+        "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "OutlineHelper_main",
+        "-color-diagnostics",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "outlinehelper"
+      ],
+      "outputFileMapPath" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/main.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/Modules/OutlineHelper.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/Sources/main.swift"
+      ],
+      "tempsPath" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build",
+      "wholeModuleOptimization" : true
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "OutlineHelper" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "OutlineHelper",
+      "-package-name",
+      "outlinehelper",
+      "-whole-module-optimization",
+      "-num-threads",
+      "12",
+      "-c",
+      "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/Sources/main.swift",
+      "-I",
+      "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-O",
+      "-j12",
+      "-DSWIFT_PACKAGE",
+      "-module-cache-path",
+      "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "OutlineHelper_main",
+      "-color-diagnostics",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "outlinehelper",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "OutlineHelper" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "enableAllTraits" : false
+  },
+  "writeCommands" : {
+    "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/Sources/main.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/sources"
+    },
+    "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.build/main.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/OutlineHelper.product/Objects.LinkFileList"
+    },
+    "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/egorandreevich/_Dev/Work/Skygen-Rework/skygen-ui/skygen-ui/src-tauri/macos/OutlineHelper/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}
