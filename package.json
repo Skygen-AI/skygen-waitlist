@@ -12,6 +12,7 @@
     "tauri:build": "tauri build"
   },
   "dependencies": {
+    "@base-ui-components/react": "^1.0.0-beta.3",
     "@google/genai": "^1.16.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.8",
@@ -32,6 +33,7 @@
     "react-markdown": "^10.1.0",
     "rehype-highlight": "^7.0.2",
     "remark-gfm": "^4.0.1",
+    "shiki": "^3.12.2",
     "tailwind-merge": "^3.3.1",
     "three": "^0.179.1"
   },
