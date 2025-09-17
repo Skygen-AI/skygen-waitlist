@@ -3,9 +3,10 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import AutoPlayVideo from "@/components/marketing/AutoPlayVideo";
-import { Features } from "@/components/blocks/features-8";
-import SectionWithMockup from "@/components/blocks/section-with-mockup";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Features } from "@/components/blocks/features-8";
+import NotificationCenter from "@/components/ui/notification-center";
+import { Browser } from "@/components/ui/browser-simulator";
 
 export default function MarketingHomePage() {
   const container = useRef<HTMLDivElement>(null);
@@ -49,8 +50,7 @@ export default function MarketingHomePage() {
           SkyGen
         </div>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mt-2">Your cross‑device AI assistant. The first of its kind.</h1>
-        <p className="mt-6 text-white/80 max-w-4xl mx-auto text-lg">One AI that connects all your devices—phone, laptop, desktop, even your smart home—into one whole. Say a single voice command, and your devices work for you, wherever you are—together or one by one. They handle tasks and give you back time for what matters most—your life.</p>
-        <p className="mt-4 text-white/70 max-w-3xl mx-auto">Always with you. Always working. 24/7. SkyGen writes reports, schedules meetings, books doctor appointments, reserves tables, and prepares your home. Work, personal life, and daily tasks—handled in sync across devices—so you have time to enjoy life.</p>
+        <p className="mt-6 text-white/80 max-w-4xl mx-auto text-lg">One AI that connects all your devices—phone, laptop, desktop, even your smart home—into one whole. Say a single voice command, and your devices work for you, wherever you are—together or one by one. They handle tasks and give you back time for what matters most—your life. Always with you. Always working. 25/8. SkyGen writes reports, schedules meetings, books doctor appointments, reserves tables, and prepares your home. Work, personal life, and daily tasks—handled in sync across devices—so you have time to enjoy life.</p>
         <div className="mt-10 flex items-center justify-center gap-4">
           <Link href="/site/waitlist" className="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-white/90">Want to try it? Join the waitlist</Link>
         </div>
@@ -61,7 +61,7 @@ export default function MarketingHomePage() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
-        className="relative z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+        className="relative z-40"
       >
         <Features />
       </motion.div>
@@ -73,12 +73,34 @@ export default function MarketingHomePage() {
         transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
         className="relative z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-16"
       >
-        <SectionWithMockup 
-          title="Experience SkyGen in Action"
-          description="See how SkyGen seamlessly integrates into your daily workflow, automating tasks and keeping you in control. From email management to smart home control, everything just works."
-          primaryImageSrc="/images/recording-demo.jpg"
-          secondaryImageSrc="/images/accessibility-demo.jpg"
-        />
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Demo scenario — How it works</h2>
+          
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-4">In the air</h3>
+              <p className="text-white/80">Give a voice command from your phone, and SkyGen writes reports on your desktop, updates presentations on your laptop, and schedules meetings in your calendar—all ready when you land.</p>
+            </div>
+            
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-4">At home</h3>
+              <p className="text-white/80">One command, and SkyGen runs your smart home—blinds go down, oven warms up, deliveries are confirmed—your evening is set.</p>
+            </div>
+            
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-4">In chats</h3>
+              <p className="text-white/80">On phone and desktop, across WhatsApp, Telegram, and Slack, SkyGen filters noise, replies in your style, and gives a clear summary—so you never miss what matters.</p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold mb-6">Cross-Device Web Control</h3>
+            <p className="text-white/80 mb-8 max-w-2xl mx-auto">SkyGen can control your browser across all devices, helping you research, bookmark, and organize information seamlessly.</p>
+            <div className="flex justify-center">
+              <Browser />
+            </div>
+          </div>
+        </section>
       </motion.div>
 
       <motion.div
@@ -103,17 +125,30 @@ export default function MarketingHomePage() {
         transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
         className="relative z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-16"
       >
-        <section className="mx-auto max-w-6xl px-6 py-16 text-center">
-          <h3 className="text-3xl font-bold">Join Waitlist today</h3>
-          <div className="mt-6">
-            <Link href="/site/waitlist" className="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-white/90">Join Waitlist</Link>
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Smart Notifications</h2>
+          <div className="flex justify-center">
+            <NotificationCenter 
+              cardTitle="Intelligent Alert System"
+              cardDescription="SkyGen learns your patterns and sends smart, contextual notifications across all your devices."
+              notificationTitle="SkyGen"
+              notificationDescription="Your meeting prep is ready. Documents organized, agenda set."
+              notificationTime="now"
+            />
           </div>
         </section>
+      </motion.div>
 
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
+        className="relative z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-16"
+      >
         <section className="mx-auto max-w-6xl px-6 py-16">
-          <h2 className="text-2xl font-semibold mb-3">About SkyGen</h2>
-          <p className="text-white/80 max-w-3xl">SkyGen is the personal AI assistant that lives across all your devices and acts as one. From work to home, from travel to chats—it handles the tasks, so you get back your time.</p>
-          <div className="mt-6">
+          <p className="text-white/80 max-w-3xl mb-8 text-lg text-center mx-auto">SkyGen is the personal AI assistant that lives across all your devices and acts as one. From work to home, from travel to chats—it handles the tasks, so you get back your time.</p>
+          <div className="text-center">
             <Link href="/site/waitlist" className="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-white/90">Join the waitlist</Link>
           </div>
         </section>

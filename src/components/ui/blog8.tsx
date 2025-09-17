@@ -77,8 +77,8 @@ const Blog8 = ({
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
-          className="relative bg-black/40 backdrop-blur-sm border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+          className="relative border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16"
+          style={{ backgroundColor: 'rgb(30, 30, 30)' }}
         >
           <div>
             {posts.map((post, index) => (
