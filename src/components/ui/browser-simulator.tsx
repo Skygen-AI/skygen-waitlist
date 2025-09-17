@@ -40,6 +40,7 @@ const Browser = () => {
           type="text" 
           placeholder="Search Google or type URL" 
           value="21st.dev"
+          readOnly
           className="bg-[#3b3b3b] text-sm border-2 border-transparent h-full rounded-full outline-none text-white px-[15px] flex-1 transition ease-in-out duration-200 hover:bg-[#5d5d5d] focus:border-[#add6ff] focus:bg-[#3b3b3b] focus:transition-none placeholder-white"
         />
         <button className="w-[27px] h-[25px] border-none bg-transparent text-white rounded-full transition ease-in-out duration-200 hover:bg-[#5d5d5d]">⋮</button>

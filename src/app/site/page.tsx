@@ -7,6 +7,11 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Features } from "@/components/blocks/features-8";
 import NotificationCenter from "@/components/ui/notification-center";
 import { Browser } from "@/components/ui/browser-simulator";
+import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
+import { AnimatedBeam } from "@/components/ui/animated-beam";
+import { Terminal, TypingAnimation } from "@/components/ui/terminal";
+import { AnimatedList, AnimatedListItem } from "@/components/ui/animated-list";
+import { BonusesIncentivesCard } from "@/components/ui/animated-dashboard-card";
 
 export default function MarketingHomePage() {
   const container = useRef<HTMLDivElement>(null);
@@ -135,6 +140,133 @@ export default function MarketingHomePage() {
               notificationDescription="Your meeting prep is ready. Documents organized, agenda set."
               notificationTime="now"
             />
+          </div>
+        </section>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
+        className="relative z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-16"
+      >
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Command Line Interface</h2>
+          <p className="text-white/80 text-center mb-8 max-w-2xl mx-auto">SkyGen provides powerful CLI tools for developers and power users to automate complex workflows.</p>
+          <div className="flex justify-center">
+            <Terminal sequence>
+              <TypingAnimation>$ skygen init</TypingAnimation>
+              <TypingAnimation>✓ Initializing SkyGen workspace...</TypingAnimation>
+              <TypingAnimation>✓ Setting up AI models...</TypingAnimation>
+              <TypingAnimation>✓ Configuring device connections...</TypingAnimation>
+              <TypingAnimation>✓ SkyGen ready to go!</TypingAnimation>
+              <TypingAnimation>$ skygen task --create 'Book flight to NYC'</TypingAnimation>
+              <TypingAnimation>✓ Task created and assigned to travel agent</TypingAnimation>
+            </Terminal>
+          </div>
+        </section>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
+        className="relative z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-16"
+      >
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Explore SkyGen Features</h2>
+          <BentoGrid>
+            <BentoCard
+              name="Voice Commands"
+              className="col-span-1"
+              background={<div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20" />}
+              Icon={() => <div className="w-6 h-6 bg-blue-500 rounded-full" />}
+              description="Control all your devices with natural voice commands"
+              href="/site/features"
+              cta="Learn more"
+            />
+            <BentoCard
+              name="Smart Automation"
+              className="col-span-2"
+              background={<div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-teal-500/20" />}
+              Icon={() => <div className="w-6 h-6 bg-green-500 rounded-full" />}
+              description="AI-powered automation that learns your patterns and preferences"
+              href="/site/features"
+              cta="Discover"
+            />
+            <BentoCard
+              name="Cross-Platform"
+              className="col-span-2"
+              background={<div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20" />}
+              Icon={() => <div className="w-6 h-6 bg-orange-500 rounded-full" />}
+              description="Seamlessly work across desktop, mobile, and smart home devices"
+              href="/site/features"
+              cta="See how"
+            />
+            <BentoCard
+              name="Privacy First"
+              className="col-span-1"
+              background={<div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20" />}
+              Icon={() => <div className="w-6 h-6 bg-purple-500 rounded-full" />}
+              description="Your data stays yours, with end-to-end encryption"
+              href="/site/features"
+              cta="Security"
+            />
+          </BentoGrid>
+        </section>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: [0.25, 0.25, 0, 1] }}
+        className="relative z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-16"
+      >
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Real-time Activity Feed</h2>
+              <p className="text-white/80 mb-8">See SkyGen in action as it completes tasks across your ecosystem. Live updates keep you informed of every automation.</p>
+              <div className="max-w-md">
+                <AnimatedList>
+                  <AnimatedListItem>
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-sm">Email draft completed</span>
+                    </div>
+                  </AnimatedListItem>
+                  <AnimatedListItem>
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span className="text-sm">Calendar updated</span>
+                    </div>
+                  </AnimatedListItem>
+                  <AnimatedListItem>
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                      <span className="text-sm">Smart home configured</span>
+                    </div>
+                  </AnimatedListItem>
+                  <AnimatedListItem>
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <span className="text-sm">Travel booking initiated</span>
+                    </div>
+                  </AnimatedListItem>
+                </AnimatedList>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <BonusesIncentivesCard 
+                bonusText="Tasks Completed"
+                incentivesText="Time Saved"
+                bonusesValue={1247}
+                incentivesValue={89}
+              />
+            </div>
           </div>
         </section>
       </motion.div>
