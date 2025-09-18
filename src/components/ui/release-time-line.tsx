@@ -156,7 +156,7 @@ export default function TimeLine_01({
   return (
     <section className="py-32">
       <div className="container">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-5xl">
           <h1 className="mb-4 text-3xl font-bold tracking-tight md:text-5xl">
             {title}
           </h1>
@@ -165,19 +165,19 @@ export default function TimeLine_01({
           </p>
         </div>
 
-        <div className="mx-auto mt-16 max-w-3xl space-y-16 md:mt-24 md:space-y-24">
+        <div className="mx-auto mt-16 max-w-5xl space-y-16 md:mt-24 md:space-y-24">
           {entries.map((entry, index) => {
             const isActive = index === activeIndex;
 
             return (
-              <div
-                key={index}
-                className="relative flex flex-col gap-4 md:flex-row md:gap-16"
-                ref={(el) => setItemRef(el, index)}
-                aria-current={isActive ? "true" : "false"}
-              >
+              <React.Fragment key={index}>
+                <div
+                  className="relative flex flex-col gap-4 md:flex-row md:gap-16"
+                  ref={(el) => setItemRef(el, index)}
+                  aria-current={isActive ? "true" : "false"}
+                >
                 {/* Sticky meta column */}
-                <div className="top-8 flex h-min w-64 shrink-0 items-center gap-4 md:sticky">
+                <div className="top-8 flex h-min w-72 shrink-0 items-center gap-4 md:sticky">
                   <div className="flex items-center gap-3">
                     <div className={`p-2 rounded-lg ${
                       isActive ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
@@ -292,7 +292,15 @@ export default function TimeLine_01({
                     </div>
                   </div>
                 </article>
-              </div>
+                </div>
+                
+                {/* Divider between items (except for the last item) */}
+                {index < entries.length - 1 && (
+                  <div className="flex justify-center my-16 md:my-24">
+                    <div className="w-px h-16 bg-gradient-to-b from-transparent via-border to-transparent opacity-50"></div>
+                  </div>
+                )}
+              </React.Fragment>
             );
           })}
         </div>
