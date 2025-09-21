@@ -38,12 +38,22 @@ export function AnimatedMarkdown({
     setDisplayedText('');
   }, [text]);
 
+  // Render plain text with cursor during animation, markdown when complete
+  if (currentIndex < text.length) {
+    return (
+      <div className={className}>
+        <span className="inline">
+          {displayedText}
+          <span className="inline-block w-0.5 h-4 bg-neutral-800 dark:bg-neutral-200 animate-pulse ml-0.5">|</span>
+        </span>
+      </div>
+    );
+  }
+
+  // Show final markdown when animation is complete
   return (
     <div className={className}>
       <MarkdownRenderer content={displayedText} />
-      {currentIndex < text.length && (
-        <span className="inline-block w-0.5 h-5 bg-neutral-800 dark:bg-neutral-200 ml-1 animate-pulse">▎</span>
-      )}
     </div>
   );
 }

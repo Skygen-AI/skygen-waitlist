@@ -33,7 +33,8 @@ interface Task {
 
 interface PlanProps {
   tasks?: Task[];
-  executionSpeed?: number; // Скорость выполнения (в миллисекундах)
+  executionSpeed?: number; // Execution speed (in milliseconds)
+  onAllTasksCompleted?: () => void; // Callback when all tasks are completed
 }
 
 // Initial task data
@@ -225,7 +226,8 @@ const initialTasks: Task[] = [
 
 export default function Plan({ 
   tasks: initialTasksProp, 
-  executionSpeed = 2000 
+  executionSpeed = 50,
+  onAllTasksCompleted
 }: PlanProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasksProp || initialTasks);
   const [expandedTasks, setExpandedTasks] = useState<string[]>(
@@ -257,11 +259,11 @@ export default function Plan({
       delay: number;
     }> = [];
 
-    let currentDelay = 1000; // Начальная задержка
+    let currentDelay = 50; // Initial delay
 
     taskList.forEach((task, taskIndex) => {
-      // Добавляем задачи в очередь с учетом зависимостей
-      const dependencyDelay = task.dependencies.length * 2000;
+      // Add tasks to queue considering dependencies
+      const dependencyDelay = task.dependencies.length * 50;
       
       // Запуск задачи
       queue.push({
@@ -270,39 +272,41 @@ export default function Plan({
         delay: currentDelay + dependencyDelay
       });
 
-      // Подзадачи выполняются параллельно
+      // Subtasks execute sequentially (ORDERED)
+      let subtaskDelay = currentDelay + dependencyDelay + 20;
+      
       task.subtasks.forEach((subtask, subtaskIndex) => {
-        const randomDelay = Math.random() * 3000 + 1000; // 1-4 секунды
-        
-        // Запуск подзадачи
+        // Start subtask
         queue.push({
           taskId: task.id,
           subtaskId: subtask.id,
           action: 'start',
-          delay: currentDelay + dependencyDelay + 500 + (subtaskIndex * 200)
+          delay: subtaskDelay
         });
 
-        // Завершение подзадачи (случайное)
-        const completionActions: Array<'complete' | 'fail' | 'need-help'> = ['complete', 'complete', 'complete', 'need-help', 'fail'];
-        const randomAction = completionActions[Math.floor(Math.random() * completionActions.length)];
-        
+        // Complete subtask (always successful) - fixed delay for consistent timing
+        subtaskDelay += 40; // 40ms between start and complete
         queue.push({
           taskId: task.id,
           subtaskId: subtask.id,
-          action: randomAction,
-          delay: currentDelay + dependencyDelay + randomDelay + 2000
+          action: 'complete',
+          delay: subtaskDelay
         });
+
+        // Next subtask starts after current one completes
+        subtaskDelay += 20; // 20ms gap between subtasks
       });
 
-      // Завершение основной задачи
-      const taskCompletionDelay = Math.max(...task.subtasks.map(() => Math.random() * 4000 + 3000));
+      // Complete main task after all subtasks are done
       queue.push({
         taskId: task.id,
-        action: Math.random() > 0.8 ? 'need-help' : 'complete',
-        delay: currentDelay + dependencyDelay + taskCompletionDelay
+        action: 'complete',
+        delay: subtaskDelay + 30 // 30ms after last subtask
       });
 
-      currentDelay += 6000; // Интервал между началом задач
+      // Next task starts after current task is completely finished
+      const taskDuration = 20 + (task.subtasks.length * 60) + 30; // Total time for this task
+      currentDelay += taskDuration + 50; // 50ms gap between tasks
     });
 
     setExecutionQueue(queue.sort((a, b) => a.delay - b.delay));
@@ -326,23 +330,24 @@ export default function Plan({
     generateExecutionQueue(tasksToUse);
   }, []); // Выполняется только при монтировании
 
-  // Отслеживаем завершённые задачи для автоматического скрытия
+  // Track completed tasks for automatic hiding
   const [completedTasksTracker, setCompletedTasksTracker] = React.useState<Set<string>>(new Set());
   const [closingTasks, setClosingTasks] = React.useState<Set<string>>(new Set());
+  const [allTasksCompletedNotified, setAllTasksCompletedNotified] = React.useState(false);
 
   React.useEffect(() => {
     const currentCompleted = new Set(tasks.filter(task => task.status === 'completed').map(task => task.id));
     const newlyCompleted = [...currentCompleted].filter(id => !completedTasksTracker.has(id));
     
     if (newlyCompleted.length > 0) {
-      // Через 5 секунд после завершения скрываем раздел
+      // Hide section IMMEDIATELY after completion
       const timeouts = newlyCompleted.map(taskId => {
-        // Через 3 секунды показываем индикацию закрытия
+        // Show closing indication after 0.1 seconds
         const warningTimeout = setTimeout(() => {
           setClosingTasks(prev => new Set([...prev, taskId]));
-        }, 3000);
+        }, 100);
 
-        // Через 5 секунд закрываем раздел
+        // Close section after 0.15 seconds
         const closeTimeout = setTimeout(() => {
           setExpandedTasks(prev => prev.filter(id => id !== taskId));
           setClosingTasks(prev => {
@@ -350,7 +355,7 @@ export default function Plan({
             newSet.delete(taskId);
             return newSet;
           });
-        }, 5000);
+        }, 150);
 
         return [warningTimeout, closeTimeout];
       }).flat();
@@ -362,7 +367,17 @@ export default function Plan({
         timeouts.forEach(timeout => clearTimeout(timeout));
       };
     }
-  }, [tasks, completedTasksTracker]);
+
+    // Check if all tasks are completed
+    const allTasksCompleted = tasks.every(task => task.status === 'completed');
+    if (allTasksCompleted && !allTasksCompletedNotified && onAllTasksCompleted && tasks.length > 0) {
+      setAllTasksCompletedNotified(true);
+      // Add delay before calling callback to let the final animations finish
+      setTimeout(() => {
+        onAllTasksCompleted();
+      }, 50);
+    }
+  }, [tasks, completedTasksTracker, allTasksCompletedNotified, onAllTasksCompleted]);
 
   // Автоматическое выполнение плана
   useEffect(() => {
@@ -395,8 +410,8 @@ export default function Plan({
           subtasks: task.subtasks.map(subtask => {
             if (subtask.id !== item.subtaskId) return subtask;
             
-            // Не изменяем статус если задача уже завершена, провалена или требует помощи
-            if (subtask.status === 'completed' || subtask.status === 'failed') {
+            // Don't change status if task is already completed
+            if (subtask.status === 'completed') {
               return subtask;
             }
             
@@ -409,9 +424,9 @@ export default function Plan({
           })
         };
       } else {
-        // Обновляем основную задачу
-        // Не изменяем статус если задача уже завершена, провалена или требует помощи
-        if (task.status === 'completed' || task.status === 'failed') {
+        // Update main task
+        // Don't change status if task is already completed
+        if (task.status === 'completed') {
           return task;
         }
         

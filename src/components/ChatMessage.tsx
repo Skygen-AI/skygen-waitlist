@@ -14,11 +14,12 @@ import { parseToolsFromMessage } from "@/utils/toolParser";
 interface ChatMessageProps {
   message: ChatMessageType;
   showTime?: boolean;
-  isLatest?: boolean; // Для определения, нужна ли анимация печатания
-  onTypingComplete?: () => void; // Колбэк по завершению печатания
+  isLatest?: boolean; // For determining if typing animation is needed
+  onTypingComplete?: () => void; // Callback on typing completion
+  onPlanCompleted?: () => void; // Callback when plan is completed
 }
 
-export function ChatMessage({ message, showTime = true, isLatest = false, onTypingComplete }: ChatMessageProps) {
+export function ChatMessage({ message, showTime = true, isLatest = false, onTypingComplete, onPlanCompleted }: ChatMessageProps) {
   const isUser = message.author === 'user';
   const [isTypingAnimationComplete, setIsTypingAnimationComplete] = useState(!isLatest || isUser);
   const [isVisible, setIsVisible] = useState(false);
@@ -145,10 +146,11 @@ export function ChatMessage({ message, showTime = true, isLatest = false, onTypi
 
                      {/* Tool components inside AI message */}
            {!isUser && message.status !== 'typing' && (
-             <ToolRenderer 
-               tools={parsedMessage.tools}
-               isTypingComplete={isTypingAnimationComplete}
-             />
+           <ToolRenderer 
+             tools={parsedMessage.tools}
+             isTypingComplete={isTypingAnimationComplete}
+             onPlanCompleted={onPlanCompleted}
+           />
            )}
         </div>
         </div>

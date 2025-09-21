@@ -1,4 +1,4 @@
-// Типы для инструментов
+// Types for tools
 export interface ParsedTool {
   name: string;
   content: string;
@@ -16,12 +16,28 @@ export function parseToolsFromMessage(message: string): ParsedMessage {
   const tools: ParsedTool[] = [];
   let textContent = message;
   
-  // Регулярное выражение для поиска инструментов
-  const toolRegex = /\[\[tool:\s*([^\]]+)\]\]([\s\S]*?)\[\[\/tool:\s*\1\]\]/gi;
+  // Регулярное выражение для поиска инструментов в старом формате
+  const oldToolRegex = /\[\[tool:\s*([^\]]+)\]\]([\s\S]*?)\[\[\/tool:\s*\1\]\]/gi;
+  
+  // Регулярное выражение для поиска инструментов в новом формате <tool_call>
+  const newToolRegex = /<tool_call>\s*<tool_name>\s*([^<]+)\s*<\/tool_name>\s*<parameters>([\s\S]*?)<\/parameters>\s*<\/tool_call>/gi;
+  
   let match;
   
-  // Находим все инструменты
-  while ((match = toolRegex.exec(message)) !== null) {
+  // Находим инструменты в старом формате
+  while ((match = oldToolRegex.exec(message)) !== null) {
+    const [fullMatch, toolName, toolContent] = match;
+    
+    tools.push({
+      name: toolName.trim(),
+      content: toolContent.trim(),
+      startIndex: match.index,
+      endIndex: match.index + fullMatch.length
+    });
+  }
+  
+  // Находим инструменты в новом формате
+  while ((match = newToolRegex.exec(message)) !== null) {
     const [fullMatch, toolName, toolContent] = match;
     
     tools.push({
@@ -83,7 +99,17 @@ export interface PlanData {
 // Парсер данных плана из JSON или структурированного текста
 export function parsePlanData(content: string): PlanData | null {
   try {
-    // Сначала пробуем парсить как JSON
+    // Сначала проверяем, есть ли параметр <tasks> в tool_call
+    const tasksMatch = content.match(/<tasks>([\s\S]*?)<\/tasks>/i);
+    if (tasksMatch) {
+      const tasksJson = tasksMatch[1].trim();
+      const parsedTasks = JSON.parse(tasksJson);
+      if (Array.isArray(parsedTasks)) {
+        return validatePlanData({ tasks: parsedTasks });
+      }
+    }
+    
+    // Затем пробуем парсить как обычный JSON
     const jsonData = JSON.parse(content);
     
     // Проверяем структуру
@@ -109,26 +135,24 @@ function validatePlanData(data: any): PlanData {
   const normalizePriority = (priority: string) => 
     validPriorities.includes(priority) ? priority : 'medium';
 
-  // Функция для обеспечения разнообразия статусов
+  // Function to ensure status diversity (only successful statuses)
   const ensureStatusDiversity = (tasks: any[]) => {
     const statusCounts = tasks.reduce((acc, task) => {
       acc[task.status] = (acc[task.status] || 0) + 1;
       return acc;
     }, {});
 
-    // Если все задачи имеют одинаковый статус (чаще всего 'pending'), добавим разнообразие
+    // If all tasks have the same status (usually 'pending'), add variety
     const uniqueStatuses = Object.keys(statusCounts);
     if (uniqueStatuses.length === 1 && tasks.length > 1) {
-      // Делаем некоторые задачи завершёнными или в процессе
+      // Make some tasks completed or in progress (only successful statuses)
       tasks.forEach((task, index) => {
         if (index === 0 && tasks.length > 2) {
-          task.status = 'completed'; // Первая задача завершена
+          task.status = 'completed'; // First task completed
         } else if (index === 1) {
-          task.status = 'in-progress'; // Вторая в процессе
-        } else if (index === tasks.length - 1 && tasks.length > 3) {
-          // Последняя может нуждаться в помощи
-          task.status = Math.random() > 0.5 ? 'need-help' : 'pending';
+          task.status = 'in-progress'; // Second in progress
         }
+        // All other tasks remain pending - they will be processed by the plan execution
       });
     }
     return tasks;
@@ -260,4 +284,48 @@ function parseStructuredPlanText(content: string): PlanData | null {
 function extractValue(line: string): string | null {
   const match = line.match(/:\s*(.+)$/);
   return match ? match[1].trim() : null;
+}
+
+// Типы для файловых данных
+export interface FileData {
+  name: string;
+  size: string;
+  type: string;
+  url?: string;
+  downloadUrl?: string;
+  timestamp: Date;
+  description?: string;
+}
+
+// Парсер данных файла из JSON
+export function parseFileData(content: string): FileData | null {
+  try {
+    // Сначала проверяем, есть ли параметр <file> в tool_call
+    const fileMatch = content.match(/<file>([\s\S]*?)<\/file>/i);
+    if (fileMatch) {
+      const fileJson = fileMatch[1].trim();
+      const parsedFile = JSON.parse(fileJson);
+      return validateFileData(parsedFile);
+    }
+    
+    // Затем пробуем парсить как обычный JSON
+    const jsonData = JSON.parse(content);
+    return validateFileData(jsonData);
+  } catch (error) {
+    console.error('Error parsing file data:', error);
+    return null;
+  }
+}
+
+// Валидация и нормализация данных файла
+function validateFileData(data: any): FileData {
+  return {
+    name: data.name || 'unknown_file',
+    size: data.size || '0 KB',
+    type: data.type || 'application/octet-stream',
+    url: data.url,
+    downloadUrl: data.downloadUrl,
+    timestamp: data.timestamp ? new Date(data.timestamp) : new Date(),
+    description: data.description
+  };
 }

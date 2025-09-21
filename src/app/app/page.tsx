@@ -8,6 +8,7 @@ import { useChat } from "../../hooks/useChat";
 import { ChatMessage, ChatConversation } from "../../types/chat";
 import { ChatMessage as ChatMessageComponent } from "../../components/ChatMessage";
 import { geminiService } from "../../services/geminiService";
+import { mockChatService } from "../../services/mockChatService";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { useTheme } from "../../contexts/ThemeContext";
 import { Component as EtheralShadow } from "../../components/ui/etheral-shadow";
@@ -93,6 +94,23 @@ export default function AppPage() {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isUserAtBottom, setIsUserAtBottom] = useState<boolean>(true);
 
+  // Handle plan completion
+  const handlePlanCompleted = useCallback(() => {
+    // Send file message after plan completion
+    const fileMessage = mockChatService.generateFileMessage();
+    addAssistantMessage(fileMessage);
+    
+    // Force scroll to bottom after file appears
+    setTimeout(() => {
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTo({
+          top: messagesContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 300);
+  }, [addAssistantMessage]);
+
   // Handle message sending
   const handleSendMessage = useCallback(async (content: string) => {
     if (!content.trim()) return;
@@ -115,8 +133,8 @@ export default function AppPage() {
       // Get message history from current conversation for context
       const conversationHistory = activeConversation?.messages || [];
       
-      // Call Gemini API with context
-      const response = await geminiService.sendMessageWithContext(
+      // Call Mock Chat Service instead of Gemini for demo
+      const response = await mockChatService.sendMessageWithContext(
         content, 
         conversationHistory
       );
@@ -202,6 +220,50 @@ export default function AppPage() {
       });
     }
   }, [activeConversation?.messages.length, isUserAtBottom]);
+
+  // Force scroll to bottom when messages change (including file attachments)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTo({
+          top: messagesContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [activeConversation?.messages]);
+
+  // Additional scroll trigger for when content expands (like file attachments)
+  useEffect(() => {
+    const handleContentChange = () => {
+      if (messagesContainerRef.current && isUserAtBottom) {
+        setTimeout(() => {
+          if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTo({
+              top: messagesContainerRef.current.scrollHeight,
+              behavior: 'smooth'
+            });
+          }
+        }, 200);
+      }
+    };
+
+    // Set up a mutation observer to watch for content changes
+    const observer = new MutationObserver(handleContentChange);
+    
+    if (messagesContainerRef.current) {
+      observer.observe(messagesContainerRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['style'] // Watch for style changes that might affect height
+      });
+    }
+
+    return () => observer.disconnect();
+  }, [isUserAtBottom]);
 
 
 
@@ -331,6 +393,7 @@ export default function AppPage() {
           {/* Messages */}
           <div 
             ref={messagesContainerRef}
+            data-messages-container
             className="flex-1 overflow-auto px-5 md:px-7 py-6 relative z-10"
           >
             <div className="mx-auto max-w-6xl space-y-7">
@@ -355,6 +418,7 @@ export default function AppPage() {
                       message={message}
                       showTime={true}
                       isLatest={isLastAssistantMessage}
+                      onPlanCompleted={handlePlanCompleted}
                     />
                   );
                 })
